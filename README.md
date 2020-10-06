@@ -1,3 +1,4 @@
-Second version of Hello World in React.js
+<h3>Dependencies</h3>
 
 <code>npm install @babel/core babel-loader @babel/preset-env @babel/preset-react --save-dev</code>
+<code>npm install webpack webpack-cli html-webpack-plugin html-loader  --save-de</code>

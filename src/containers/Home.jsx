@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import '../assets/styles/App.scss';
+import { connect } from 'react-redux';
 import Search from '../components/Search';
 import Categories from '../components/Categories';
 import Carousel from '../components/Carousel';
 import CarouselItem from '../components/CarouselItem';
 import useInitialState from '../hooks/useInitialState';
+import '../assets/styles/App.scss';
 
-const API = 'http://localhost:3000/initalState';
-
-const Home = () => {
-  const initialState = useInitialState(API);
+const Home = ({ mylist, trends, originals }) => {
   return (
     <>
       <Search />
       {
-        initialState.mylist.length > 0 && (
+        mylist.length > 0 && (
           <Categories title='Mi lista'>
             <Carousel>
               {
-                initialState.mylist.map((item) => <CarouselItem key={item.id} {...item} />)
+                mylist.map((item) => <CarouselItem key={item.id} {...item} />)
               }
             </Carousel>
           </Categories>
@@ -26,11 +24,11 @@ const Home = () => {
       }
 
       {
-        initialState.trends.length > 0 && (
+        trends.length > 0 && (
           <Categories title='Tendencias'>
             <Carousel>
               {
-                initialState.trends.map((item) => <CarouselItem key={item.id} {...item} />)
+                trends.map((item) => <CarouselItem key={item.id} {...item} />)
               }
             </Carousel>
           </Categories>
@@ -38,11 +36,11 @@ const Home = () => {
       }
 
       {
-        initialState.originals.length > 0 && (
+        originals.length > 0 && (
           <Categories title='Originales de JSVideo'>
             <Carousel>
               {
-                initialState.originals.map((item) => <CarouselItem key={item.id} {...item} />)
+                originals.map((item) => <CarouselItem key={item.id} {...item} />)
               }
             </Carousel>
           </Categories>
@@ -52,4 +50,12 @@ const Home = () => {
   );
 };
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    mylist: state.mylist,
+    trends: state.trends,
+    originals: state.originals,
+  };
+};
+
+export default connect(mapStateToProps, null)(Home);
